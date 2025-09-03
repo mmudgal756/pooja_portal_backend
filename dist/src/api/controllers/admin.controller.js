@@ -35,69 +35,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var mongoose_1 = __importDefault(require("mongoose"));
-var dotenv_1 = __importDefault(require("dotenv"));
-var swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-var swagger_1 = __importDefault(require("./config/swagger"));
-var user_routes_1 = __importDefault(require("./api/routes/user.routes"));
-var category_routes_1 = __importDefault(require("./api/routes/category.routes"));
-var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
-var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
-var user_model_1 = require("./models/user.model");
-dotenv_1.default.config();
-var app = (0, express_1.default)();
-// Middleware
-app.use(express_1.default.json());
-// Routes
-app.use('/api/users', user_routes_1.default);
-app.use('/api/categories', category_routes_1.default);
-app.use('/api/products', product_routes_1.default);
-app.use('/api/admin', admin_routes_1.default);
-// Swagger
-app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.default));
-var port = parseInt(process.env.PORT || '3000');
-var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var admin, newAdmin, err_1;
+exports.makeAdmin = void 0;
+var user_model_1 = require("../../models/user.model");
+var makeAdmin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 5, , 6]);
-                return [4 /*yield*/, mongoose_1.default.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test')];
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, user_model_1.User.findById(req.params.id)];
             case 1:
-                _a.sent();
-                console.log('Connected to MongoDB');
-                return [4 /*yield*/, user_model_1.User.findOne({ role: 'Admin' })];
+                user = _a.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(404).json({ msg: 'User not found' })];
+                }
+                user.role = 'Admin';
+                return [4 /*yield*/, user.save()];
             case 2:
-                admin = _a.sent();
-                if (!!admin) return [3 /*break*/, 4];
-                newAdmin = new user_model_1.User({
-                    name: 'Admin',
-                    email: 'admin@example.com',
-                    password: 'admin123',
-                    role: 'Admin'
-                });
-                return [4 /*yield*/, newAdmin.save()];
-            case 3:
                 _a.sent();
-                console.log('Default admin user created');
-                _a.label = 4;
-            case 4:
-                app.listen(port, function () {
-                    console.log("listening on port ".concat(port));
-                });
-                return [3 /*break*/, 6];
-            case 5:
+                res.json({ msg: 'User is now an admin' });
+                return [3 /*break*/, 4];
+            case 3:
                 err_1 = _a.sent();
-                console.error(err_1);
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+                console.error(err_1.message);
+                res.status(500).send('Server error');
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
-start();
-//# sourceMappingURL=index.js.map
+exports.makeAdmin = makeAdmin;
+//# sourceMappingURL=admin.controller.js.map
