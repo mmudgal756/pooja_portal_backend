@@ -49,9 +49,11 @@ var category_routes_1 = __importDefault(require("./api/routes/category.routes"))
 var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
 var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
 var user_model_1 = require("./models/user.model");
+var cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
 // Middleware
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 // Routes
 app.use('/api/users', user_routes_1.default);

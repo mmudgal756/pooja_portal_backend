@@ -9,12 +9,14 @@ import categoryRoutes from './api/routes/category.routes';
 import productRoutes from './api/routes/product.routes';
 import adminRoutes from './api/routes/admin.routes';
 import { User } from './models/user.model';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // Routes
