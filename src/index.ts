@@ -9,19 +9,29 @@ import categoryRoutes from './api/routes/category.routes';
 import productRoutes from './api/routes/product.routes';
 import adminRoutes from './api/routes/admin.routes';
 import { User } from './models/user.model';
-import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 
+// A custom middleware to handle CORS
+app.use((req, res, next) => {
+  // Set the origin to allow your React app
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  // Set the allowed HTTP methods
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  // Set the allowed headers, including Content-Type and Authorization
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle the preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-}));
 app.use(express.json());
 
 // Routes
