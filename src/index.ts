@@ -2,8 +2,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './config/swagger';
+// import swaggerUi from 'swagger-ui-express';
+// import swaggerSpec from './config/swagger';
 import userRoutes from './api/routes/user.routes';
 import categoryRoutes from './api/routes/category.routes';
 import productRoutes from './api/routes/product.routes';
@@ -41,7 +41,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const port = parseInt(process.env.PORT || '3000');
 

@@ -42,8 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var dotenv_1 = __importDefault(require("dotenv"));
-var swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-var swagger_1 = __importDefault(require("./config/swagger"));
+// import swaggerUi from 'swagger-ui-express';
+// import swaggerSpec from './config/swagger';
 var user_routes_1 = __importDefault(require("./api/routes/user.routes"));
 var category_routes_1 = __importDefault(require("./api/routes/category.routes"));
 var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
@@ -73,7 +73,7 @@ app.use('/api/categories', category_routes_1.default);
 app.use('/api/products', product_routes_1.default);
 app.use('/api/admin', admin_routes_1.default);
 // Swagger
-app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.default));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 var port = parseInt(process.env.PORT || '3000');
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     var admin, newAdmin, err_1;
