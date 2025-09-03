@@ -49,16 +49,23 @@ var category_routes_1 = __importDefault(require("./api/routes/category.routes"))
 var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
 var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
 var user_model_1 = require("./models/user.model");
-var cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
+// A custom middleware to handle CORS
+app.use(function (req, res, next) {
+    // Set the origin to allow your React app
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    // Set the allowed HTTP methods
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    // Set the allowed headers, including Content-Type and Authorization
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // Handle the preflight OPTIONS request
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
 // Middleware
-app.use((0, cors_1.default)({
-    origin: 'http://localhost:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-}));
 app.use(express_1.default.json());
 // Routes
 app.use('/api/users', user_routes_1.default);
