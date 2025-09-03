@@ -54,7 +54,7 @@ dotenv_1.default.config();
 var app = (0, express_1.default)();
 // Middleware
 app.use((0, cors_1.default)({
-    origin: '*',
+    origin: 'http://localhost:5173',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
