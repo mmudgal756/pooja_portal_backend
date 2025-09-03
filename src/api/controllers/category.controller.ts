@@ -17,6 +17,7 @@ export const getCategories = async (req: Request, res: Response) => {
     const categories = await Category.find();
     res.json(categories);
   } catch (err: any) {
-    res.status(500).json({ msg: err.message });
+    console.error('Error fetching categories:', err);
+    res.status(500).json({ msg: 'An internal server error occurred while fetching categories.', error: err.message });
   }
 };
