@@ -61,3 +61,13 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).send('Server error');
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find().select('-password');
+    res.json(users);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};

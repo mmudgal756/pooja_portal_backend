@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.register = void 0;
+exports.getAllUsers = exports.login = exports.register = void 0;
 var express_validator_1 = require("express-validator");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_model_1 = require("../../models/user.model");
@@ -122,4 +122,25 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 exports.login = login;
+var getAllUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var users, err_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, user_model_1.User.find().select('-password')];
+            case 1:
+                users = _a.sent();
+                res.json(users);
+                return [3 /*break*/, 3];
+            case 2:
+                err_3 = _a.sent();
+                console.error(err_3.message);
+                res.status(500).send('Server error');
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllUsers = getAllUsers;
 //# sourceMappingURL=user.controller.js.map
