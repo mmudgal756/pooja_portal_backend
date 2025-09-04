@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var user_controller_1 = require("../controllers/user.controller");
 var user_validator_1 = require("../validators/user.validator");
-var auth_middleware_1 = require("../middleware/auth.middleware");
 var router = (0, express_1.Router)();
 /**
  * @swagger
@@ -17,15 +16,11 @@ var router = (0, express_1.Router)();
  *   get:
  *     summary: Get all users
  *     tags: [Users]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: A list of users
- *       403:
- *         description: Forbidden
  */
-router.get('/', (0, auth_middleware_1.auth)(['Admin']), user_controller_1.getAllUsers);
+router.get('/', user_controller_1.getAllUsers);
 /**
  * @swagger
  * /api/users/register:
