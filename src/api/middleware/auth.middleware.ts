@@ -9,9 +9,10 @@ interface AuthRequest extends Request {
 export const auth = (roles: string[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     // Bypassing authentication for now.
+    req.user = { id: '60d21b4667d0d8992e610c85', role: 'Vendor' }; // Mock user
     next();
     return;
-    
+
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
