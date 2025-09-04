@@ -71,7 +71,7 @@ app.use(express_1.default.json());
 app.use('/api/users', user_routes_1.default);
 app.use('/api/categories', category_routes_1.default);
 app.use('/api/products', product_routes_1.default);
-app.use('/api/admin', admin_routes_1.default);
+app.use('/api/admin', admin_routes_1.default); // This line was missing
 // Swagger
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 var port = parseInt(process.env.PORT || '3000');
