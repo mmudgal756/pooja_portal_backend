@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { createCategory, getCategories } from '../controllers/category.controller';
+import { createCategory, getCategories, deleteCategoryByName } from '../controllers/category.controller';
 import { auth } from '../middleware/auth.middleware';
 
 const router = Router();
@@ -53,5 +53,27 @@ router.post('/', createCategory); // Removed auth middleware
  *         description: Server error
  */
 router.get('/', getCategories);
+
+/**
+ * @swagger
+ * /api/categories/{categoryName}:
+ *   delete:
+ *     summary: Delete a category by name
+ *     tags: [Categories]
+ *     parameters:
+ *       - in: path
+ *         name: categoryName
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Category removed
+ *       404:
+ *         description: Category not found
+ *       500:
+ *         description: Server error
+ */
+router.delete('/:categoryName', deleteCategoryByName);
 
 export default router;
