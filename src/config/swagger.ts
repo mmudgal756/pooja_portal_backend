@@ -51,7 +51,7 @@ const options = {
       }
     ]
   },
-  apis: ['./src/api/routes/*.ts']
+  apis: ['./src/api/routes/*.ts', './src/api/routes/anusthan.routes.ts']
 };
 
 const swaggerSpec = swaggerJsdoc(options);
