@@ -2,6 +2,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 // import swaggerUi from 'swagger-ui-express';
 // import swaggerSpec from './config/swagger';
 import userRoutes from './api/routes/user.routes';
@@ -13,22 +14,8 @@ dotenv.config();
 
 const app = express();
 
-// A custom middleware to handle CORS
-app.use((req, res, next) => {
-  // Set the origin to allow your React app
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  // Set the allowed HTTP methods
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  // Set the allowed headers, including Content-Type and Authorization
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  // Handle the preflight OPTIONS request
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
+// Use the cors middleware
+app.use(cors());
 
 // Middleware
 app.use(express.json());

@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var dotenv_1 = __importDefault(require("dotenv"));
+var cors_1 = __importDefault(require("cors"));
 // import swaggerUi from 'swagger-ui-express';
 // import swaggerSpec from './config/swagger';
 var user_routes_1 = __importDefault(require("./api/routes/user.routes"));
@@ -50,20 +51,8 @@ var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
 var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
-// A custom middleware to handle CORS
-app.use(function (req, res, next) {
-    // Set the origin to allow your React app
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-    // Set the allowed HTTP methods
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    // Set the allowed headers, including Content-Type and Authorization
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // Handle the preflight OPTIONS request
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
+// Use the cors middleware
+app.use((0, cors_1.default)());
 // Middleware
 app.use(express_1.default.json());
 // Routes
