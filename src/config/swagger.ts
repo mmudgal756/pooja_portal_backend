@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000'
+        url: 'http://localhost:3000/api'
       }
     ],
     components: {
@@ -32,6 +32,24 @@ const options = {
               type: 'string'
             },
             stock: {
+              type: 'number'
+            }
+          }
+        },
+        Anusthan: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+              description: 'The auto-generated id of the anusthan'
+            },
+            name: {
+              type: 'string'
+            },
+            description: {
+              type: 'string'
+            },
+            price: {
               type: 'number'
             }
           }
