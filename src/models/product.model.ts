@@ -7,7 +7,7 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
   stock: { type: Number, required: true, default: 0 },
-  vendor: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+  vendor: { type: Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
 export const Product = model('Product', productSchema);
