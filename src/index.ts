@@ -45,43 +45,55 @@ app.use('/api/admin', adminRoutes);
 
 const port = parseInt(process.env.PORT || '3000');
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 const start = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test');
-    console.log('Connected to MongoDB');
-
-    // Create a default admin user if one doesn't exist
-    const admin = await User.findOne({ role: 'Admin' });
-    if (!admin) {
-      const newAdmin = new User({
-        name: 'Admin',
-        email: 'admin@example.com',
-        password: 'admin123',
-        role: 'Admin'
-      });
-      await newAdmin.save();
-      console.log('Default admin user created');
+  let connectionRetries = 5;
+  while (connectionRetries > 0) {
+    try {
+      await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test');
+      console.log('Connected to MongoDB');
+      break; // If connection is successful, break the loop
+    } catch (err) {
+      console.error('MongoDB connection failed. Retrying...');
+      connectionRetries--;
+      if (connectionRetries === 0) {
+        console.error('Could not connect to MongoDB after multiple retries. Exiting.');
+        process.exit(1); // Exit if all retries fail
+      }
+      await sleep(5000); // Wait for 5 seconds before retrying
     }
-
-    // Create a default vendor user if one doesn't exist
-    const vendor = await User.findOne({ role: 'Vendor' });
-    if (!vendor) {
-      const newVendor = new User({
-        name: 'Vendor',
-        email: 'vendor@example.com',
-        password: 'vendor123',
-        role: 'Vendor'
-      });
-      await newVendor.save();
-      console.log('Default vendor user created');
-    }
-
-    app.listen(port, () => {
-      console.log(`listening on port ${port}`);
-    });
-  } catch (err) {
-    console.error(err);
   }
+
+  // Create a default admin user if one doesn't exist
+  const admin = await User.findOne({ role: 'Admin' });
+  if (!admin) {
+    const newAdmin = new User({
+      name: 'Admin',
+      email: 'admin@example.com',
+      password: 'admin123',
+      role: 'Admin'
+    });
+    await newAdmin.save();
+    console.log('Default admin user created');
+  }
+
+  // Create a default vendor user if one doesn't exist
+  const vendor = await User.findOne({ role: 'Vendor' });
+  if (!vendor) {
+    const newVendor = new User({
+      name: 'Vendor',
+      email: 'vendor@example.com',
+      password: 'vendor123',
+      role: 'Vendor'
+    });
+    await newVendor.save();
+    console.log('Default vendor user created');
+  }
+
+  app.listen(port, () => {
+    console.log(`listening on port ${port}`);
+  });
 };
 
 start();

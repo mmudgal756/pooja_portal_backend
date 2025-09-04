@@ -75,20 +75,41 @@ app.use('/api/admin', admin_routes_1.default);
 // Swagger
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 var port = parseInt(process.env.PORT || '3000');
+var sleep = function (ms) { return new Promise(function (resolve) { return setTimeout(resolve, ms); }); };
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var admin, newAdmin, vendor, newVendor, err_1;
+    var connectionRetries, err_1, admin, newAdmin, vendor, newVendor;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 8, , 9]);
-                return [4 /*yield*/, mongoose_1.default.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test')];
+                connectionRetries = 5;
+                _a.label = 1;
             case 1:
+                if (!(connectionRetries > 0)) return [3 /*break*/, 7];
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 6]);
+                return [4 /*yield*/, mongoose_1.default.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test')];
+            case 3:
                 _a.sent();
                 console.log('Connected to MongoDB');
-                return [4 /*yield*/, user_model_1.User.findOne({ role: 'Admin' })];
-            case 2:
+                return [3 /*break*/, 7]; // If connection is successful, break the loop
+            case 4:
+                err_1 = _a.sent();
+                console.error('MongoDB connection failed. Retrying...');
+                connectionRetries--;
+                if (connectionRetries === 0) {
+                    console.error('Could not connect to MongoDB after multiple retries. Exiting.');
+                    process.exit(1); // Exit if all retries fail
+                }
+                return [4 /*yield*/, sleep(5000)];
+            case 5:
+                _a.sent(); // Wait for 5 seconds before retrying
+                return [3 /*break*/, 6];
+            case 6: return [3 /*break*/, 1];
+            case 7: return [4 /*yield*/, user_model_1.User.findOne({ role: 'Admin' })];
+            case 8:
                 admin = _a.sent();
-                if (!!admin) return [3 /*break*/, 4];
+                if (!!admin) return [3 /*break*/, 10];
                 newAdmin = new user_model_1.User({
                     name: 'Admin',
                     email: 'admin@example.com',
@@ -96,14 +117,14 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                     role: 'Admin'
                 });
                 return [4 /*yield*/, newAdmin.save()];
-            case 3:
+            case 9:
                 _a.sent();
                 console.log('Default admin user created');
-                _a.label = 4;
-            case 4: return [4 /*yield*/, user_model_1.User.findOne({ role: 'Vendor' })];
-            case 5:
+                _a.label = 10;
+            case 10: return [4 /*yield*/, user_model_1.User.findOne({ role: 'Vendor' })];
+            case 11:
                 vendor = _a.sent();
-                if (!!vendor) return [3 /*break*/, 7];
+                if (!!vendor) return [3 /*break*/, 13];
                 newVendor = new user_model_1.User({
                     name: 'Vendor',
                     email: 'vendor@example.com',
@@ -111,20 +132,15 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                     role: 'Vendor'
                 });
                 return [4 /*yield*/, newVendor.save()];
-            case 6:
+            case 12:
                 _a.sent();
                 console.log('Default vendor user created');
-                _a.label = 7;
-            case 7:
+                _a.label = 13;
+            case 13:
                 app.listen(port, function () {
                     console.log("listening on port ".concat(port));
                 });
-                return [3 /*break*/, 9];
-            case 8:
-                err_1 = _a.sent();
-                console.error(err_1);
-                return [3 /*break*/, 9];
-            case 9: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
 }); };
