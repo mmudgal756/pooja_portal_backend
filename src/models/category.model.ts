@@ -6,7 +6,7 @@ const categorySchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    enum: ['Products', 'Anuthans'] // Enforce the two allowed values
+    enum: ['Products', 'Anusthans'] // Enforce the two allowed values
   },
   description: { type: String }
 });
