@@ -39,6 +39,26 @@ router.get('/me', (0, auth_middleware_1.auth)(['Admin', 'Vendor', 'Customer']), 
 router.get('/', user_controller_1.getAllUsers);
 /**
  * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user to retrieve
+ *     responses:
+ *       200:
+ *         description: The user
+ *       404:
+ *         description: User not found
+ */
+router.get('/:id', user_controller_1.getUserById);
+/**
+ * @swagger
  * /api/users/register:
  *   post:
  *     summary: Register a new user

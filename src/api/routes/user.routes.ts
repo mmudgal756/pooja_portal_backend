@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { register, login, getAllUsers, updateUserRole, getMe } from '../controllers/user.controller';
+import { register, login, getAllUsers, updateUserRole, getMe, getUserById } from '../controllers/user.controller';
 import { registerValidator, loginValidator } from '../validators/user.validator';
 import { auth } from '../middleware/auth.middleware';
 
@@ -40,6 +40,27 @@ router.get('/me', auth(['Admin', 'Vendor', 'Customer']), getMe);
  *         description: A list of users
  */
 router.get('/', getAllUsers);
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user to retrieve
+ *     responses:
+ *       200:
+ *         description: The user
+ *       404:
+ *         description: User not found
+ */
+router.get('/:id', getUserById);
 
 /**
  * @swagger

@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUserRole = exports.getAllUsers = exports.getMe = exports.login = exports.register = void 0;
+exports.updateUserRole = exports.getAllUsers = exports.getUserById = exports.getMe = exports.login = exports.register = void 0;
 var express_validator_1 = require("express-validator");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_model_1 = require("../../models/user.model");
@@ -146,8 +146,35 @@ var getMe = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 exports.getMe = getMe;
+var getUserById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, user_model_1.User.findById(req.params.id).select('-password')];
+            case 1:
+                user = _a.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(404).json({ msg: 'User not found' })];
+                }
+                res.json(user);
+                return [3 /*break*/, 3];
+            case 2:
+                err_4 = _a.sent();
+                console.error(err_4.message);
+                if (err_4.kind === 'ObjectId') {
+                    return [2 /*return*/, res.status(404).json({ msg: 'User not found' })];
+                }
+                res.status(500).send('Server Error');
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getUserById = getUserById;
 var getAllUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, err_4;
+    var users, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -158,8 +185,8 @@ var getAllUsers = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 res.json(users);
                 return [3 /*break*/, 3];
             case 2:
-                err_4 = _a.sent();
-                console.error(err_4.message);
+                err_5 = _a.sent();
+                console.error(err_5.message);
                 res.status(500).send('Server error');
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
@@ -168,7 +195,7 @@ var getAllUsers = function (req, res) { return __awaiter(void 0, void 0, void 0,
 }); };
 exports.getAllUsers = getAllUsers;
 var updateUserRole = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var role, id, allowedRoles, user, userResponse, err_5;
+    var role, id, allowedRoles, user, userResponse, err_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -193,8 +220,8 @@ var updateUserRole = function (req, res) { return __awaiter(void 0, void 0, void
                 res.json({ msg: 'User role updated successfully', user: userResponse });
                 return [3 /*break*/, 3];
             case 2:
-                err_5 = _a.sent();
-                res.status(500).json({ msg: err_5.message });
+                err_6 = _a.sent();
+                res.status(500).json({ msg: err_6.message });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
