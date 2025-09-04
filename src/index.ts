@@ -27,11 +27,11 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
-app.use('/api', userRoutes);
-app.use('/api', categoryRoutes);
-app.use('/api', productRoutes);
-app.use('/api', adminRoutes);
-app.use('/api', anusthanRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/anusthans', anusthanRoutes);
 
 const port = parseInt(process.env.PORT || '3000');
 
