@@ -35,6 +35,20 @@ const options = {
               type: 'number'
             }
           }
+        },
+        Anusthan: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
+            },
+            description: {
+              type: 'string'
+            },
+            price: {
+              type: 'number'
+            }
+          }
         }
       },
       securitySchemes: {
