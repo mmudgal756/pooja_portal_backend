@@ -76,11 +76,11 @@ app.use('/api/admin', admin_routes_1.default);
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 var port = parseInt(process.env.PORT || '3000');
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var admin, newAdmin, err_1;
+    var admin, newAdmin, vendor, newVendor, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 5, , 6]);
+                _a.trys.push([0, 8, , 9]);
                 return [4 /*yield*/, mongoose_1.default.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test')];
             case 1:
                 _a.sent();
@@ -100,16 +100,31 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                 _a.sent();
                 console.log('Default admin user created');
                 _a.label = 4;
-            case 4:
+            case 4: return [4 /*yield*/, user_model_1.User.findOne({ role: 'Vendor' })];
+            case 5:
+                vendor = _a.sent();
+                if (!!vendor) return [3 /*break*/, 7];
+                newVendor = new user_model_1.User({
+                    name: 'Vendor',
+                    email: 'vendor@example.com',
+                    password: 'vendor123',
+                    role: 'Vendor'
+                });
+                return [4 /*yield*/, newVendor.save()];
+            case 6:
+                _a.sent();
+                console.log('Default vendor user created');
+                _a.label = 7;
+            case 7:
                 app.listen(port, function () {
                     console.log("listening on port ".concat(port));
                 });
-                return [3 /*break*/, 6];
-            case 5:
+                return [3 /*break*/, 9];
+            case 8:
                 err_1 = _a.sent();
                 console.error(err_1);
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); };

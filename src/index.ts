@@ -63,6 +63,19 @@ const start = async () => {
       console.log('Default admin user created');
     }
 
+    // Create a default vendor user if one doesn't exist
+    const vendor = await User.findOne({ role: 'Vendor' });
+    if (!vendor) {
+      const newVendor = new User({
+        name: 'Vendor',
+        email: 'vendor@example.com',
+        password: 'vendor123',
+        role: 'Vendor'
+      });
+      await newVendor.save();
+      console.log('Default vendor user created');
+    }
+
     app.listen(port, () => {
       console.log(`listening on port ${port}`);
     });
