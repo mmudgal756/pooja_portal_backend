@@ -31,7 +31,7 @@ const router = Router();
  *             properties:
  *               name:
  *                 type: string
- *                 enum: [Products, Anuthans]  // Updated Swagger docs
+ *                 enum: [Products, Anuthans]
  *               description:
  *                 type: string
  *     responses:
