@@ -18,7 +18,7 @@ const router = Router();
 
 /**
  * @swagger
- * /anusthans:
+ * /api/anusthans:
  *   get:
  *     summary: Returns the list of all the anusthans
  *     tags: [Anusthans]
@@ -36,7 +36,7 @@ router.get('/anusthans', getAnusthans);
 
 /**
  * @swagger
- * /anusthans/{id}:
+ * /api/anusthans/{id}:
  *   get:
  *     summary: Get the anusthan by id
  *     tags: [Anusthans]
@@ -61,7 +61,7 @@ router.get('/anusthans/:id', getAnusthan);
 
 /**
  * @swagger
- * /anusthans:
+ * /api/anusthans:
  *   post:
  *     summary: Create a new anusthan
  *     tags: [Anusthans]
@@ -100,7 +100,7 @@ router.post('/anusthans', createAnusthan);
 
 /**
  * @swagger
- * /anusthans/{id}:
+ * /api/anusthans/{id}:
  *   put:
  *     summary: Update the anusthan by the id
  *     tags: [Anusthans]
@@ -140,7 +140,7 @@ router.put('/anusthans/:id', updateAnusthan);
 
 /**
  * @swagger
- * /anusthans/{id}:
+ * /api/anusthans/{id}:
  *   delete:
  *     summary: Remove the anusthan by id
  *     tags: [Anusthans]
