@@ -32,7 +32,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Anusthan'
  */
-router.get('/anusthans', getAnusthans);
+router.get('/', getAnusthans);
 
 /**
  * @swagger
@@ -57,7 +57,7 @@ router.get('/anusthans', getAnusthans);
  *       404:
  *         description: The anusthan was not found
  */
-router.get('/anusthans/:id', getAnusthan);
+router.get('/:id', getAnusthan);
 
 /**
  * @swagger
@@ -96,7 +96,7 @@ router.get('/anusthans/:id', getAnusthan);
  *       400:
  *         description: Some server error
  */
-router.post('/anusthans', createAnusthan);
+router.post('/', createAnusthan);
 
 /**
  * @swagger
@@ -136,7 +136,7 @@ router.post('/anusthans', createAnusthan);
  *       400:
  *         description: Some server error
  */
-router.put('/anusthans/:id', updateAnusthan);
+router.put('/:id', updateAnusthan);
 
 /**
  * @swagger
@@ -158,6 +158,6 @@ router.put('/anusthans/:id', updateAnusthan);
  *       404:
  *         description: The anusthan was not found
  */
-router.delete('/anusthans/:id', deleteAnusthan);
+router.delete('/:id', deleteAnusthan);
 
 export default router;
