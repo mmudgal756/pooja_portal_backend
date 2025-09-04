@@ -43,16 +43,16 @@ var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var cors_1 = __importDefault(require("cors"));
-// import swaggerUi from 'swagger-ui-express';
-// import swaggerSpec from './config/swagger';
 var user_routes_1 = __importDefault(require("./api/routes/user.routes"));
 var category_routes_1 = __importDefault(require("./api/routes/category.routes"));
 var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
 var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
-// Use the cors middleware
-app.use((0, cors_1.default)());
+// Use the cors middleware with specific origin
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:5173'
+}));
 // Middleware
 app.use(express_1.default.json());
 // Routes
@@ -60,41 +60,24 @@ app.use('/api/users', user_routes_1.default);
 app.use('/api/categories', category_routes_1.default);
 app.use('/api/products', product_routes_1.default);
 app.use('/api/admin', admin_routes_1.default);
-// Swagger
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 var port = parseInt(process.env.PORT || '3000');
-var sleep = function (ms) { return new Promise(function (resolve) { return setTimeout(resolve, ms); }); };
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var connectionRetries, err_1;
+    var err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                connectionRetries = 5;
-                _a.label = 1;
-            case 1:
-                if (!(connectionRetries > 0)) return [3 /*break*/, 7];
-                _a.label = 2;
-            case 2:
-                _a.trys.push([2, 4, , 6]);
+                _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, mongoose_1.default.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/test')];
-            case 3:
+            case 1:
                 _a.sent();
                 console.log('Connected to MongoDB');
-                return [3 /*break*/, 7]; // If connection is successful, break the loop
-            case 4:
+                return [3 /*break*/, 3];
+            case 2:
                 err_1 = _a.sent();
-                console.error('MongoDB connection failed. Retrying...');
-                connectionRetries--;
-                if (connectionRetries === 0) {
-                    console.error('Could not connect to MongoDB after multiple retries. Exiting.');
-                    process.exit(1); // Exit if all retries fail
-                }
-                return [4 /*yield*/, sleep(5000)];
-            case 5:
-                _a.sent(); // Wait for 5 seconds before retrying
-                return [3 /*break*/, 6];
-            case 6: return [3 /*break*/, 1];
-            case 7:
+                console.error('MongoDB connection failed.', err_1);
+                process.exit(1);
+                return [3 /*break*/, 3];
+            case 3:
                 app.listen(port, function () {
                     console.log("listening on port ".concat(port));
                 });
