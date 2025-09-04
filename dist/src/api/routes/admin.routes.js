@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var admin_controller_1 = require("../controllers/admin.controller");
+console.log('--- Admin routes file loading... ---');
 var router = (0, express_1.Router)();
 /**
  * @swagger
@@ -45,5 +46,6 @@ var router = (0, express_1.Router)();
  *         description: Server error
  */
 router.put('/users/:id/role', admin_controller_1.updateUserRole);
+console.log('--- PUT /api/admin/users/:id/role route configured ---');
 exports.default = router;
 //# sourceMappingURL=admin.routes.js.map

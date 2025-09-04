@@ -2,6 +2,8 @@
 import { Router } from 'express';
 import { updateUserRole } from '../controllers/admin.controller';
 
+console.log('--- Admin routes file loading... ---');
+
 const router = Router();
 
 /**
@@ -47,5 +49,7 @@ const router = Router();
  *         description: Server error
  */
 router.put('/users/:id/role', updateUserRole);
+console.log('--- PUT /api/admin/users/:id/role route configured ---');
+
 
 export default router;
