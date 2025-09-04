@@ -70,7 +70,22 @@ router.get('/anusthans/:id', getAnusthan);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Anusthan'
+ *             type: object
+ *             required:
+ *               - name
+ *               - description
+ *               - price
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *             example:
+ *               name: Gandharva Vivah
+ *               description: A celestial marriage ceremony.
+ *               price: 21000
  *     responses:
  *       201:
  *         description: The anusthan was successfully created
@@ -101,7 +116,14 @@ router.post('/anusthans', createAnusthan);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Anusthan'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               price:
+ *                 type: number
  *     responses:
  *       200:
  *         description: The anusthan was updated
