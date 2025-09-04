@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { makeAdmin } from '../controllers/admin.controller';
+import { updateUserRole } from '../controllers/admin.controller';
 import { auth } from '../middleware/auth.middleware';
 
 const router = Router();
@@ -14,27 +14,45 @@ const router = Router();
 
 /**
  * @swagger
- * /api/admin/make-admin/{id}:
+ * /api/admin/users/{id}/role:
  *   put:
- *     summary: Make a user an admin
+ *     summary: Update a user's role
  *     tags: [Admin]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The user id
+ *         description: The ID of the user to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               role:
+ *                 type: string
+ *                 enum: [Admin, Vendor, Customer]
+ *             required:
+ *               - role
  *     responses:
  *       200:
- *         description: User is now an admin
+ *         description: User role updated successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  *       403:
  *         description: Forbidden
  *       404:
  *         description: User not found
+ *       500:
+ *         description: Server error
  */
-router.put('/make-admin/:id', auth(['Admin']), makeAdmin);
+router.put('/users/:id/role', auth(['Admin']), updateUserRole);
 
 export default router;
