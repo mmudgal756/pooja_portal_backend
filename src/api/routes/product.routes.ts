@@ -4,6 +4,7 @@ import {
   createProduct,
   getProducts,
   getProductById,
+  getProductsByCategory, // Import the new function
   updateProduct,
   deleteProduct
 } from '../controllers/product.controller';
@@ -17,110 +18,41 @@ const router = Router();
  *   description: Product management
  */
 
-/**
- * @swagger
- * /api/products:
- *   post:
- *     summary: Create a new product
- *     tags: [Products]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Product'
- *     responses:
- *       201:
- *         description: Product created successfully
- *       400:
- *         description: Bad request
- */
+// POST /api/products - Create a new product
 router.post('/', createProduct);
 
-/**
- * @swagger
- * /api/products:
- *   get:
- *     summary: Get all products
- *     tags: [Products]
- *     responses:
- *       200:
- *         description: A list of products
- *       500:
- *         description: Server error
- */
+// GET /api/products - Get all products
 router.get('/', getProducts);
 
 /**
  * @swagger
- * /api/products/{id}:
+ * /api/products/category/{categoryName}:
  *   get:
- *     summary: Get a product by ID
+ *     summary: Get products by category name
  *     tags: [Products]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: categoryName
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: A single product
+ *         description: A list of products for the given category
  *       404:
- *         description: Product not found
+ *         description: Category not found
  *       500:
  *         description: Server error
  */
+router.get('/category/:categoryName', getProductsByCategory);
+
+// GET /api/products/:id - Get a product by ID
 router.get('/:id', getProductById);
 
-/**
- * @swagger
- * /api/products/{id}:
- *   put:
- *     summary: Update a product
- *     tags: [Products]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Product'
- *     responses:
- *       200:
- *         description: Product updated successfully
- *       400:
- *         description: Bad request
- *       404:
- *         description: Product not found
- */
+// PUT /api/products/:id - Update a product
 router.put('/:id', updateProduct);
 
-/**
- * @swagger
- * /api/products/{id}:
- *   delete:
- *     summary: Delete a product
- *     tags: [Products]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Product removed
- *       404:
- *         description: Product not found
- *       500:
- *         description: Server error
- */
+// DELETE /api/products/:id - Delete a product
 router.delete('/:id', deleteProduct);
 
 export default router;

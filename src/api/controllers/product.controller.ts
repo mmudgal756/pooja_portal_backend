@@ -1,6 +1,7 @@
 
 import { Request, Response } from 'express';
 import { Product } from '../../models/product.model';
+import { Category } from '../../models/category.model';
 
 const createProduct = async (req: Request, res: Response) => {
   try {
@@ -32,6 +33,19 @@ const getProductById = async (req: Request, res: Response) => {
   }
 };
 
+const getProductsByCategory = async (req: Request, res: Response) => {
+  try {
+    const category = await Category.findOne({ name: req.params.categoryName });
+    if (!category) {
+      return res.status(404).json({ msg: 'Category not found' });
+    }
+    const products = await Product.find({ category: category._id });
+    res.status(200).json(products);
+  } catch (err: any) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+
 const updateProduct = async (req: Request, res: Response) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -56,4 +70,4 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-export { createProduct, getProducts, getProductById, updateProduct, deleteProduct };
+export { createProduct, getProducts, getProductById, getProductsByCategory, updateProduct, deleteProduct };
