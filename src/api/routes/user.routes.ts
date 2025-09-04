@@ -1,7 +1,8 @@
 
 import { Router } from 'express';
-import { register, login, getAllUsers, updateUserRole } from '../controllers/user.controller';
+import { register, login, getAllUsers, updateUserRole, getMe } from '../controllers/user.controller';
 import { registerValidator, loginValidator } from '../validators/user.validator';
+import { auth } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -11,6 +12,22 @@ const router = Router();
  *   name: Users
  *   description: User management and authentication
  */
+
+/**
+ * @swagger
+ * /api/users/me:
+ *   get:
+ *     summary: Get current user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The current user
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/me', auth(['Admin', 'Vendor', 'Customer']), getMe);
 
 /**
  * @swagger

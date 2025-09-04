@@ -62,6 +62,20 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+export const getMe = async (req: any, res: Response) => {
+  try {
+    // req.user is populated by the auth middleware
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.json(user);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find().select('-password');

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var user_controller_1 = require("../controllers/user.controller");
 var user_validator_1 = require("../validators/user.validator");
+var auth_middleware_1 = require("../middleware/auth.middleware");
 var router = (0, express_1.Router)();
 /**
  * @swagger
@@ -10,6 +11,21 @@ var router = (0, express_1.Router)();
  *   name: Users
  *   description: User management and authentication
  */
+/**
+ * @swagger
+ * /api/users/me:
+ *   get:
+ *     summary: Get current user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The current user
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/me', (0, auth_middleware_1.auth)(['Admin', 'Vendor', 'Customer']), user_controller_1.getMe);
 /**
  * @swagger
  * /api/users:
