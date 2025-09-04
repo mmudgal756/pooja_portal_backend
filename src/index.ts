@@ -7,6 +7,9 @@ import userRoutes from './api/routes/user.routes';
 import categoryRoutes from './api/routes/category.routes';
 import productRoutes from './api/routes/product.routes';
 import adminRoutes from './api/routes/admin.routes';
+import anusthanRoutes from './api/routes/anusthan.routes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger';
 
 dotenv.config();
 
@@ -20,11 +23,15 @@ app.use(cors({
 // Middleware
 app.use(express.json());
 
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api', userRoutes);
+app.use('/api', categoryRoutes);
+app.use('/api', productRoutes);
+app.use('/api', adminRoutes);
+app.use('/api', anusthanRoutes);
 
 const port = parseInt(process.env.PORT || '3000');
 
