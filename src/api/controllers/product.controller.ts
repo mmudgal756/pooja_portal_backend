@@ -5,7 +5,14 @@ import { Category } from '../../models/category.model';
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = await Product.create(req.body);
+    const { category: categoryName, ...productData } = req.body;
+
+    const category = await Category.findOne({ name: categoryName });
+    if (!category) {
+      return res.status(400).json({ msg: 'Category not found' });
+    }
+
+    const product = await Product.create({ ...productData, category: category._id });
     res.status(201).json(product);
   } catch (err: any) {
     res.status(400).json({ msg: err.message });
