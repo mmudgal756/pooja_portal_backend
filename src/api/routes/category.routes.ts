@@ -31,13 +31,14 @@ const router = Router();
  *             properties:
  *               name:
  *                 type: string
+ *                 enum: [Products, Anuthans]  // Updated Swagger docs
  *               description:
  *                 type: string
  *     responses:
  *       201:
  *         description: Category created successfully
  *       400:
- *         description: Bad request
+ *         description: Bad request (e.g., name is not 'Products' or 'Anuthans')
  *       401:
  *         description: Unauthorized
  */
