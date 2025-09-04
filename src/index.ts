@@ -7,7 +7,6 @@ import userRoutes from './api/routes/user.routes';
 import categoryRoutes from './api/routes/category.routes';
 import productRoutes from './api/routes/product.routes';
 import adminRoutes from './api/routes/admin.routes';
-import anusthanRoutes from './api/routes/anusthan.routes';
 
 dotenv.config();
 
@@ -26,7 +25,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/anusthans', anusthanRoutes);
 
 const port = parseInt(process.env.PORT || '3000');
 

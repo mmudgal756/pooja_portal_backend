@@ -35,20 +35,6 @@ const options = {
               type: 'number'
             }
           }
-        },
-        Anusthan: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string'
-            },
-            description: {
-              type: 'string'
-            },
-            price: {
-              type: 'number'
-            }
-          }
         }
       },
       securitySchemes: {
@@ -65,7 +51,7 @@ const options = {
       }
     ]
   },
-  apis: ['./src/api/routes/*.ts', './src/api/routes/anusthan.routes.ts']
+  apis: ['./src/api/routes/*.ts']
 };
 
 const swaggerSpec = swaggerJsdoc(options);
