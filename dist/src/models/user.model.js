@@ -62,8 +62,8 @@ userSchema.pre('save', function (next) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    if (!this.isModified('password'))
-                        return [2 /*return*/, next()];
+                    if (!(this.isNew || this.isModified('password'))) return [3 /*break*/, 3];
+                    if (!(typeof this.password === 'string')) return [3 /*break*/, 3];
                     return [4 /*yield*/, bcryptjs_1.default.genSalt(10)];
                 case 1:
                     salt = _b.sent();
@@ -71,6 +71,8 @@ userSchema.pre('save', function (next) {
                     return [4 /*yield*/, bcryptjs_1.default.hash(this.password, salt)];
                 case 2:
                     _a.password = _b.sent();
+                    _b.label = 3;
+                case 3:
                     next();
                     return [2 /*return*/];
             }
