@@ -8,10 +8,6 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var auth = function (roles) {
     return function (req, res, next) {
         var _a;
-        // Bypassing authentication for now.
-        req.user = { id: '60d21b4667d0d8992e610c85', role: 'Vendor' }; // Mock user
-        next();
-        return;
         var token = (_a = req.header('Authorization')) === null || _a === void 0 ? void 0 : _a.replace('Bearer ', '');
         if (!token) {
             return res.status(401).json({ msg: 'No token, authorization denied' });
