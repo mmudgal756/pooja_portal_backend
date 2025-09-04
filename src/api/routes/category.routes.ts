@@ -16,10 +16,8 @@ const router = Router();
  * @swagger
  * /api/categories:
  *   post:
- *     summary: Create a new category
+ *     summary: Create a new category (Public)
  *     tags: [Categories]
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -39,10 +37,8 @@ const router = Router();
  *         description: Category created successfully
  *       400:
  *         description: Bad request (e.g., name is not 'Products' or 'Anuthans')
- *       401:
- *         description: Unauthorized
  */
-router.post('/', auth(['Admin']), createCategory);
+router.post('/', createCategory); // Removed auth middleware
 
 /**
  * @swagger
