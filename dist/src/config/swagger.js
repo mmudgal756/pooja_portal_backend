@@ -54,7 +54,7 @@ var options = {
             }
         ]
     },
-    apis: ['./src/api/routes/*.ts']
+    apis: ['./src/api/routes/*.ts', './src/api/routes/anusthan.routes.ts']
 };
 var swaggerSpec = (0, swagger_jsdoc_1.default)(options);
 exports.default = swaggerSpec;
