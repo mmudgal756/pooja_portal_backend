@@ -47,6 +47,7 @@ var user_routes_1 = __importDefault(require("./api/routes/user.routes"));
 var category_routes_1 = __importDefault(require("./api/routes/category.routes"));
 var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
 var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
+var anusthan_routes_1 = __importDefault(require("./api/routes/anusthan.routes"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
 // Use the cors middleware with specific origin
@@ -60,6 +61,7 @@ app.use('/api/users', user_routes_1.default);
 app.use('/api/categories', category_routes_1.default);
 app.use('/api/products', product_routes_1.default);
 app.use('/api/admin', admin_routes_1.default);
+app.use('/api/anusthans', anusthan_routes_1.default);
 var port = parseInt(process.env.PORT || '3000');
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     var err_1;
