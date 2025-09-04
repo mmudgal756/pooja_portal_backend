@@ -1,7 +1,6 @@
 
 import { Router } from 'express';
 import { updateUserRole } from '../controllers/admin.controller';
-import { auth } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -18,8 +17,6 @@ const router = Router();
  *   put:
  *     summary: Update a user's role
  *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -44,15 +41,11 @@ const router = Router();
  *         description: User role updated successfully
  *       400:
  *         description: Bad request
- *       401:
- *         description: Unauthorized
- *       403:
- *         description: Forbidden
  *       404:
  *         description: User not found
  *       500:
  *         description: Server error
  */
-router.put('/users/:id/role', auth(['Admin']), updateUserRole);
+router.put('/users/:id/role', updateUserRole);
 
 export default router;

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var product_controller_1 = require("../controllers/product.controller");
-var auth_middleware_1 = require("../middleware/auth.middleware");
 var router = (0, express_1.Router)();
 /**
  * @swagger
@@ -16,8 +15,6 @@ var router = (0, express_1.Router)();
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -29,10 +26,8 @@ var router = (0, express_1.Router)();
  *         description: Product created successfully
  *       400:
  *         description: Bad request
- *       401:
- *         description: Unauthorized
  */
-router.post('/', (0, auth_middleware_1.auth)(['Vendor']), product_controller_1.createProduct);
+router.post('/', product_controller_1.createProduct);
 /**
  * @swagger
  * /api/products:
@@ -73,8 +68,6 @@ router.get('/:id', product_controller_1.getProductById);
  *   put:
  *     summary: Update a product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -92,20 +85,16 @@ router.get('/:id', product_controller_1.getProductById);
  *         description: Product updated successfully
  *       400:
  *         description: Bad request
- *       401:
- *         description: Unauthorized
  *       404:
  *         description: Product not found
  */
-router.put('/:id', (0, auth_middleware_1.auth)(['Vendor', 'Admin']), product_controller_1.updateProduct);
+router.put('/:id', product_controller_1.updateProduct);
 /**
  * @swagger
  * /api/products/{id}:
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -115,13 +104,11 @@ router.put('/:id', (0, auth_middleware_1.auth)(['Vendor', 'Admin']), product_con
  *     responses:
  *       200:
  *         description: Product removed
- *       401:
- *         description: Unauthorized
  *       404:
  *         description: Product not found
  *       500:
  *         description: Server error
  */
-router.delete('/:id', (0, auth_middleware_1.auth)(['Vendor', 'Admin']), product_controller_1.deleteProduct);
+router.delete('/:id', product_controller_1.deleteProduct);
 exports.default = router;
 //# sourceMappingURL=product.routes.js.map

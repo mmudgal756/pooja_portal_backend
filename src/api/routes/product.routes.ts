@@ -7,7 +7,6 @@ import {
   updateProduct,
   deleteProduct
 } from '../controllers/product.controller';
-import { auth } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -24,8 +23,6 @@ const router = Router();
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -37,10 +34,8 @@ const router = Router();
  *         description: Product created successfully
  *       400:
  *         description: Bad request
- *       401:
- *         description: Unauthorized
  */
-router.post('/', auth(['Vendor']), createProduct);
+router.post('/', createProduct);
 
 /**
  * @swagger
@@ -84,8 +79,6 @@ router.get('/:id', getProductById);
  *   put:
  *     summary: Update a product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,12 +96,10 @@ router.get('/:id', getProductById);
  *         description: Product updated successfully
  *       400:
  *         description: Bad request
- *       401:
- *         description: Unauthorized
  *       404:
  *         description: Product not found
  */
-router.put('/:id', auth(['Vendor', 'Admin']), updateProduct);
+router.put('/:id', updateProduct);
 
 /**
  * @swagger
@@ -116,8 +107,6 @@ router.put('/:id', auth(['Vendor', 'Admin']), updateProduct);
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -127,13 +116,11 @@ router.put('/:id', auth(['Vendor', 'Admin']), updateProduct);
  *     responses:
  *       200:
  *         description: Product removed
- *       401:
- *         description: Unauthorized
  *       404:
  *         description: Product not found
  *       500:
  *         description: Server error
  */
-router.delete('/:id', auth(['Vendor', 'Admin']), deleteProduct);
+router.delete('/:id', deleteProduct);
 
 export default router;

@@ -2,7 +2,6 @@
 import { Router } from 'express';
 import { register, login, getAllUsers } from '../controllers/user.controller';
 import { registerValidator, loginValidator } from '../validators/user.validator';
-import { auth } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -19,15 +18,11 @@ const router = Router();
  *   get:
  *     summary: Get all users
  *     tags: [Users]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: A list of users
- *       403:
- *         description: Forbidden
  */
-router.get('/', auth(['Admin']), getAllUsers);
+router.get('/', getAllUsers);
 
 /**
  * @swagger
