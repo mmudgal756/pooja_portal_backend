@@ -8,7 +8,6 @@ import userRoutes from './api/routes/user.routes';
 import categoryRoutes from './api/routes/category.routes';
 import productRoutes from './api/routes/product.routes';
 import adminRoutes from './api/routes/admin.routes';
-import { User } from './models/user.model';
 
 dotenv.config();
 
@@ -38,7 +37,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/admin', adminRoutes); // This line was missing
+app.use('/api/admin', adminRoutes);
 
 // Swagger
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -63,32 +62,6 @@ const start = async () => {
       }
       await sleep(5000); // Wait for 5 seconds before retrying
     }
-  }
-
-  // Create a default admin user if one doesn't exist
-  const admin = await User.findOne({ role: 'Admin' });
-  if (!admin) {
-    const newAdmin = new User({
-      name: 'Admin',
-      email: 'admin@example.com',
-      password: 'admin123',
-      role: 'Admin'
-    });
-    await newAdmin.save();
-    console.log('Default admin user created');
-  }
-
-  // Create a default vendor user if one doesn't exist
-  const vendor = await User.findOne({ role: 'Vendor' });
-  if (!vendor) {
-    const newVendor = new User({
-      name: 'Vendor',
-      email: 'vendor@example.com',
-      password: 'vendor123',
-      role: 'Vendor'
-    });
-    await newVendor.save();
-    console.log('Default vendor user created');
   }
 
   app.listen(port, () => {

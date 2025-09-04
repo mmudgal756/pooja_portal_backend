@@ -48,7 +48,6 @@ var user_routes_1 = __importDefault(require("./api/routes/user.routes"));
 var category_routes_1 = __importDefault(require("./api/routes/category.routes"));
 var product_routes_1 = __importDefault(require("./api/routes/product.routes"));
 var admin_routes_1 = __importDefault(require("./api/routes/admin.routes"));
-var user_model_1 = require("./models/user.model");
 dotenv_1.default.config();
 var app = (0, express_1.default)();
 // A custom middleware to handle CORS
@@ -71,13 +70,13 @@ app.use(express_1.default.json());
 app.use('/api/users', user_routes_1.default);
 app.use('/api/categories', category_routes_1.default);
 app.use('/api/products', product_routes_1.default);
-app.use('/api/admin', admin_routes_1.default); // This line was missing
+app.use('/api/admin', admin_routes_1.default);
 // Swagger
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 var port = parseInt(process.env.PORT || '3000');
 var sleep = function (ms) { return new Promise(function (resolve) { return setTimeout(resolve, ms); }); };
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var connectionRetries, err_1, admin, newAdmin, vendor, newVendor;
+    var connectionRetries, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -106,37 +105,7 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                 _a.sent(); // Wait for 5 seconds before retrying
                 return [3 /*break*/, 6];
             case 6: return [3 /*break*/, 1];
-            case 7: return [4 /*yield*/, user_model_1.User.findOne({ role: 'Admin' })];
-            case 8:
-                admin = _a.sent();
-                if (!!admin) return [3 /*break*/, 10];
-                newAdmin = new user_model_1.User({
-                    name: 'Admin',
-                    email: 'admin@example.com',
-                    password: 'admin123',
-                    role: 'Admin'
-                });
-                return [4 /*yield*/, newAdmin.save()];
-            case 9:
-                _a.sent();
-                console.log('Default admin user created');
-                _a.label = 10;
-            case 10: return [4 /*yield*/, user_model_1.User.findOne({ role: 'Vendor' })];
-            case 11:
-                vendor = _a.sent();
-                if (!!vendor) return [3 /*break*/, 13];
-                newVendor = new user_model_1.User({
-                    name: 'Vendor',
-                    email: 'vendor@example.com',
-                    password: 'vendor123',
-                    role: 'Vendor'
-                });
-                return [4 /*yield*/, newVendor.save()];
-            case 12:
-                _a.sent();
-                console.log('Default vendor user created');
-                _a.label = 13;
-            case 13:
+            case 7:
                 app.listen(port, function () {
                     console.log("listening on port ".concat(port));
                 });
