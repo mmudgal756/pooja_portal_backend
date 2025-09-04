@@ -29,14 +29,14 @@ const router = Router();
  *             properties:
  *               name:
  *                 type: string
- *                 enum: [Products, Anuthans]
+ *                 enum: [Products, Anusthans]
  *               description:
  *                 type: string
  *     responses:
  *       201:
  *         description: Category created successfully
  *       400:
- *         description: Bad request (e.g., name is not 'Products' or 'Anuthans')
+ *         description: Bad request (e.g., name is not 'Products' or 'Anusthans')
  */
 router.post('/', createCategory); // Removed auth middleware
 
